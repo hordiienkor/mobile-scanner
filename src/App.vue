@@ -15,6 +15,7 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
 
   const handleScanned = (code?: string) => {
     scannedCode.value = code
+    startScane.value = false
   }
 </script>
 
