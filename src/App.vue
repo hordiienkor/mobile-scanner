@@ -34,7 +34,9 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
 <style scoped>
 .container {
   display: flex;
-  width: min(600px, 100vw);
+  width: min(100%, 100vw);
+  max-width: 100vw;
+  box-sizing: border-box;
   flex-direction: column;
 }
 

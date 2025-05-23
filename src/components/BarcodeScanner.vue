@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { BrowserMultiFormatReader, IScannerControls } from '@zxing/browser';
+import { DecodeHintType, BarcodeFormat } from '@zxing/library';
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 
 
@@ -11,10 +12,25 @@ const videoRef = ref<HTMLVideoElement | null>(null)
 let codeReader: BrowserMultiFormatReader | null = null
 const controlsRef = ref<IScannerControls | null>(null)
 
-onMounted(async () => {
-    codeReader = new BrowserMultiFormatReader()
+const hints = new Map();
+hints.set(DecodeHintType.POSSIBLE_FORMATS, [
+  BarcodeFormat.EAN_13,
+  BarcodeFormat.EAN_8,
+  BarcodeFormat.UPC_A,
+  BarcodeFormat.CODE_128,
+  BarcodeFormat.CODE_39
+]);
 
-    await navigator.mediaDevices.getUserMedia({ video: true });
+onMounted(async () => {
+    codeReader = new BrowserMultiFormatReader(hints)
+
+    await navigator.mediaDevices.getUserMedia({
+        video: {
+        facingMode: 'environment',
+        width: { ideal: 640 },
+        height: { ideal: 480 }
+        }
+    })
 
     const devices = await BrowserMultiFormatReader.listVideoInputDevices()
     
