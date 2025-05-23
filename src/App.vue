@@ -25,7 +25,7 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
       v-if="startScane"
       @scanned="handleScanned"
     />
-    <button class="barcode" @click="toggleScane">
+    <button class="barcode-btn" @click="toggleScane">
       {{ startScane ? 'Відмінити сканування' : 'Сканувати штрихкод' }}
     </button>
     <div>{{ `Відскановано код: ${scannedCode}` }}</div>
@@ -41,11 +41,13 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
   flex-direction: column;
 }
 
-.barcode {
+.barcode-btn {
   display: flex;
   flex-wrap: wrap;
   font-size: 20px;
   font-weight: 500;
   padding: 20px;
+  justify-content: center;
+  align-items: center;
 }
 </style>

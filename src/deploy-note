@@ -1,8 +1,8 @@
 # 1) New build
 npm run build
-# 2) New build
+# 2)
 git add -f dist
-# 3) New build
+# 3)
 git commit -m "chore: rebuild dist for gh-pages"
-# 4) New build
+# 4)
 git subtree push --prefix dist origin gh-pages  
