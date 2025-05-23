@@ -18,8 +18,10 @@ onMounted(async () => {
 
     const devices = await BrowserMultiFormatReader.listVideoInputDevices()
     
-    const selectedDeviceId = devices?.[0]?.deviceId
-    console.log('deviceId', selectedDeviceId);
+    const backCamera = devices.find(d =>
+        /back|rear|environment/i.test(d.label)
+    )
+    const selectedDeviceId = (backCamera || devices[0])?.deviceId
 
     if (selectedDeviceId && videoRef.value) {
         controlsRef.value = await codeReader.decodeFromVideoDevice(
@@ -28,7 +30,7 @@ onMounted(async () => {
         (result, error, controls) => {
             if (result) {
             emit('scanned', result.getText())
-            controls.stop()    // останавливаем сразу после успешного сканирования
+            controls.stop()
             }
         })
     }
@@ -40,5 +42,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <video ref="videoRef" autoplay muted playsinline style="width: 100%; max-height: 300px" />
+    <video ref="videoRef" autoplay muted playsinline style="width: 100vw; max-width: 100%;; max-height: 500px" />
 </template>
