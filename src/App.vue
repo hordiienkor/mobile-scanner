@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import BarcodeScanner from './components/BarcodeScanner.vue'
 
+  const showErrorMsg = ref<boolean>(false)
   const scannedCode = ref('')
 
   const startScane = ref(false)
@@ -9,13 +10,18 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
   const toggleScane = () => {
     startScane.value = ! startScane.value
     if (startScane.value) {
+      showErrorMsg.value = false
       scannedCode.value = ''
     }
   }
 
   const handleScanned = (code?: string) => {
-    scannedCode.value = code
     startScane.value = false
+    if (!code || !/^\d+$/.test(code)) {
+      showErrorMsg.value = true
+      return
+    }
+    scannedCode.value = code
   }
 </script>
 
@@ -29,6 +35,7 @@ import BarcodeScanner from './components/BarcodeScanner.vue'
       {{ startScane ? 'Відмінити сканування' : 'Сканувати штрихкод' }}
     </button>
     <div>{{ `Відскановано код: ${scannedCode}` }}</div>
+    <div v-if="showErrorMsg" style="color: red;">Не вдалось зчитати код. Спробуйте ще раз</div>
   </div>
 </template>
 

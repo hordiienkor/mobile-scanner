@@ -17,7 +17,9 @@ hints.set(DecodeHintType.POSSIBLE_FORMATS, [
   BarcodeFormat.EAN_13,
   BarcodeFormat.EAN_8,
   BarcodeFormat.UPC_A,
-  BarcodeFormat.UPC_E
+  BarcodeFormat.UPC_E,
+  BarcodeFormat.CODE_128,
+  BarcodeFormat.CODE_39
 ]);
 
 onMounted(async () => {
